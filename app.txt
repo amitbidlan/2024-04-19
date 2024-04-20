@@ -1,0 +1,41 @@
+from flask import Flask, jsonify
+from seleniumbase import SB
+import getJobsNearByApi
+
+app = Flask(__name__)
+
+# Instantiate SeleniumBase with headless Chrome
+sb = SB(headless=True, browser='chrome')
+
+@app.route('/')
+def home():
+    return jsonify({'message': 'Welcome to the Flask-SeleniumBase Integration'})
+
+@app.route('/fetch-jobs')
+def fetch_jobs_route():
+    try:
+        # Instantiate OverrideDriverTest from getJobsNearByApi module
+        override_test = getJobsNearByApi.OverrideDriverTest(sb)
+        
+        # Perform SeleniumBase operations to fetch jobs
+        jobs_list = override_test.fetch_jobs()
+        
+        # Transform job objects into JSON serializable data
+        jobs_data = [{'type_of_job': job.type_of_job,
+                      'company_name': job.company_name,
+                      'job_title': job.job_title,
+                      'salary': job.salary,
+                      'traffic': job.traffic,
+                      'working_hours': job.working_hours,
+                      'detailed_url': job.detailed_url,
+                      'image_url': job.image_url} for job in jobs_list]
+
+        # Return job data as JSON response
+        return jsonify({'status': 'success', 'jobs': jobs_data})
+
+    except Exception as e:
+        # Handle any exceptions that may occur during job fetching
+        return jsonify({'status': 'error', 'message': str(e)}), 500
+
+if __name__ == '__main__':
+    app.run(debug=True)
