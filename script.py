@@ -19,7 +19,7 @@ result_queue = queue.Queue()
 def scrape_website():
     try:
         print("All Modules are loaded")
-        with SB(headless=True,undetectable=True, do_not_track=True,servername="http://10.146.0.3:4444/wd/hub",settings_file="selenium_base_config.py") as sb:
+        with SB(headless=True,undetectable=True, do_not_track=True,servername="http://10.128.0.2:4444/wd/hub",settings_file="selenium_base_config.py") as sb:
             print("Driver loaded")
             sb.open_new_tab()
             sb.switch_to_window(1)
