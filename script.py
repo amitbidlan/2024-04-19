@@ -7,7 +7,11 @@ from selenium import webdriver
 import threading
 from seleniumbase import SB
 from selenium.webdriver.common.by import By
+
 import queue
+
+#keep server = "http://localhost:4444/wd/hub"
+#google VM IP internal edit: 10.146.0.3 on the same port
 app = Flask(__name__)
 
 result_queue = queue.Queue()
@@ -15,7 +19,7 @@ result_queue = queue.Queue()
 def scrape_website():
     try:
         print("All Modules are loaded")
-        with SB(headless=True,undetectable=True, do_not_track=True,servername="http://localhost:4444/wd/hub",settings_file="selenium_base_config.py") as sb:
+        with SB(headless=True,undetectable=True, do_not_track=True,servername="http://10.146.0.3:4444/wd/hub",settings_file="selenium_base_config.py") as sb:
             print("Driver loaded")
             sb.open_new_tab()
             sb.switch_to_window(1)
