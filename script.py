@@ -1,7 +1,7 @@
 #86
 #ngrok http http://localhost:8080
 #java -jar selenium-server-4.19.1.jar standalone
-from bs4 import BeautifulSoup
+#from bs4 import BeautifulSoup
 from flask import Flask, jsonify
 from selenium import webdriver
 import threading
